@@ -4,13 +4,14 @@ const ctx = canvas.getContext("2d");
 canvas.width = 400;
 canvas.height = 700;
 
-// Load images
+// Load game images
 const playerImg = new Image();
 playerImg.src = "images/redcar.png";
 
 const enemyImg = new Image();
 enemyImg.src = "images/greencar.png";
 
+// Player settings
 const player = {
     x: 170,
     y: 580,
@@ -24,6 +25,7 @@ let roadOffset = 0;
 let score = 0;
 let gameOver = false;
 
+// Create enemy cars
 function spawnEnemy() {
     if (!gameOver) {
         enemies.push({
@@ -38,16 +40,66 @@ function spawnEnemy() {
 
 setInterval(spawnEnemy, 1200);
 
+// Store pressed keys
 const keys = {};
 
-document.addEventListener("keydown", e => {
+// Keyboard key pressed
+document.addEventListener("keydown", (e) => {
     keys[e.key] = true;
 });
 
-document.addEventListener("keyup", e => {
+// Keyboard key released
+document.addEventListener("keyup", (e) => {
     keys[e.key] = false;
 });
 
+/* ==========================================
+   Mobile Touch Controls
+   Works with the buttons in index.html
+========================================== */
+
+const mobileButtons = {
+    btnW: "w",
+    btnA: "a",
+    btnS: "s",
+    btnD: "d"
+};
+
+Object.keys(mobileButtons).forEach(id => {
+
+    const btn = document.getElementById(id);
+
+    // Skip if button does not exist
+    if (!btn) return;
+
+    // Touch start
+    btn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        keys[mobileButtons[id]] = true;
+    });
+
+    // Touch end
+    btn.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keys[mobileButtons[id]] = false;
+    });
+
+    // Mouse support (desktop testing)
+    btn.addEventListener("mousedown", () => {
+        keys[mobileButtons[id]] = true;
+    });
+
+    btn.addEventListener("mouseup", () => {
+        keys[mobileButtons[id]] = false;
+    });
+
+    btn.addEventListener("mouseleave", () => {
+        keys[mobileButtons[id]] = false;
+    });
+
+});
+
+// Reset the game
 function resetGame() {
     player.x = 170;
     player.y = 580;
@@ -57,35 +109,36 @@ function resetGame() {
     gameOver = false;
 }
 
+// Update game objects
 function update() {
 
     if (gameOver) return;
 
-    // Move player left
+    // Move left
     if (keys["ArrowLeft"] || keys["a"] || keys["A"]) {
         player.x -= player.speed;
     }
 
-    // Move player right
+    // Move right
     if (keys["ArrowRight"] || keys["d"] || keys["D"]) {
         player.x += player.speed;
     }
 
-    // Move player forward
+    // Move forward
     if (keys["ArrowUp"] || keys["w"] || keys["W"]) {
         player.y -= player.speed;
     }
 
-    // Move player backward
+    // Move backward
     if (keys["ArrowDown"] || keys["s"] || keys["S"]) {
         player.y += player.speed;
     }
 
-    // Keep the player inside the road boundaries
+    // Keep player inside the road
     player.x = Math.max(60, Math.min(280, player.x));
     player.y = Math.max(50, Math.min(580, player.y));
 
-    // Move the road animation
+    // Animate road
     roadOffset += 8;
 
     // Update enemies
@@ -94,14 +147,14 @@ function update() {
         let enemy = enemies[i];
         enemy.y += enemy.speed;
 
-        // Remove enemy after leaving the screen
+        // Remove enemy after leaving screen
         if (enemy.y > canvas.height) {
             enemies.splice(i, 1);
             score++;
             continue;
         }
 
-        // More accurate collision (less sensitive on the sides)
+        // Collision detection
         const sidePadding = 18;
         const verticalPadding = 15;
 
@@ -123,6 +176,7 @@ function update() {
     }
 }
 
+// Draw the road
 function drawRoad() {
 
     ctx.fillStyle = "#66b5ff";
@@ -146,6 +200,7 @@ function drawRoad() {
     }
 }
 
+// Draw everything
 function draw() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -162,11 +217,13 @@ function draw() {
         }
     });
 
+    // Draw score
     ctx.fillStyle = "white";
     ctx.font = "20px Arial";
     ctx.fillText("Score: " + score, 10, 30);
 }
 
+// Main game loop
 function loop() {
     update();
     draw();
