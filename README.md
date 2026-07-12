@@ -2,14 +2,8 @@
 
 A simple 2D racing game developed using **HTML**, **CSS**, and **JavaScript**. Control your car, avoid enemy vehicles, and earn points by surviving as long as possible.
 
-## 🎮 Demo
-
-### Video Demo
-https://github.com/user-attachments/assets/09b74226-9db1-47ab-8c09-dce7b7b54d97
-
-
-
-> Replace the link above with your YouTube video, Google Drive link, or GitHub asset link.
+## 🌐 Live Demo
+Play the game here: https://2dracinggame.netlify.app/
 
 ## Features
 - Keyboard controls
