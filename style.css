@@ -20,9 +20,42 @@ canvas {
     background: #66b5ff;
 }
 
-canvas {
-    display: block;
-    background: #66b5ff;
+#gameOverScreen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    z-index: 9999;
+}
+
+#gameOverScreen h1 {
+    color: red;
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+#gameOverScreen p {
+    color: yellow;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+#gameOverScreen button {
+    padding: 12px 25px;
+    font-size: 20px;
+    border: none;
+    border-radius: 8px;
+    background: limegreen;
+    color: white;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }
 
 
