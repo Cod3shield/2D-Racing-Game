@@ -25,9 +25,38 @@ let roadOffset = 0;
 let score = 0;
 let gameOver = false;
 
+// Speed meter
+let currentSpeed = 50;
+
+// Score color animation
+let scoreColor = "white";
+
+const scoreColors = [
+    "red",
+    "yellow",
+    "cyan",
+    "lime",
+    "orange",
+    "blue",
+    "purple",
+    "magenta"
+];
+
+let colorIndex = 0;
+
+setInterval(() => {
+    colorIndex++;
+    if (colorIndex >= scoreColors.length) {
+        colorIndex = 0;
+    }
+    scoreColor = scoreColors[colorIndex];
+}, 2000);
+
 // Create enemy cars
 function spawnEnemy() {
+
     if (!gameOver) {
+
         enemies.push({
             x: Math.random() * 220 + 70,
             y: -120,
@@ -53,10 +82,12 @@ document.addEventListener("keyup", (e) => {
     keys[e.key] = false;
 });
 
-/* ==========================================
-   Mobile Touch Controls
-   Works with the buttons in index.html
-========================================== */
+/*
+==========================================
+Mobile Touch Controls
+Works with buttons in index.html
+==========================================
+*/
 
 const mobileButtons = {
     btnW: "w",
@@ -68,23 +99,18 @@ const mobileButtons = {
 Object.keys(mobileButtons).forEach(id => {
 
     const btn = document.getElementById(id);
-
-    // Skip if button does not exist
     if (!btn) return;
 
-    // Touch start
     btn.addEventListener("touchstart", (e) => {
         e.preventDefault();
         keys[mobileButtons[id]] = true;
     });
 
-    // Touch end
     btn.addEventListener("touchend", (e) => {
         e.preventDefault();
         keys[mobileButtons[id]] = false;
     });
 
-    // Mouse support (desktop testing)
     btn.addEventListener("mousedown", () => {
         keys[mobileButtons[id]] = true;
     });
@@ -96,19 +122,24 @@ Object.keys(mobileButtons).forEach(id => {
     btn.addEventListener("mouseleave", () => {
         keys[mobileButtons[id]] = false;
     });
-
 });
 
 // Reset the game
 function resetGame() {
+
     player.x = 170;
     player.y = 580;
+
     enemies = [];
     score = 0;
     roadOffset = 0;
+
     gameOver = false;
 
-    document.getElementById("gameOverScreen").classList.add("hidden");
+    document
+        .getElementById("gameOverScreen")
+        .classList
+        .add("hidden");
 }
 
 // Update game objects
@@ -116,22 +147,21 @@ function update() {
 
     if (gameOver) return;
 
-    // Move left
+    currentSpeed = 50 + (score * 3);
+
+    // Movement
     if (keys["ArrowLeft"] || keys["a"] || keys["A"]) {
         player.x -= player.speed;
     }
 
-    // Move right
     if (keys["ArrowRight"] || keys["d"] || keys["D"]) {
         player.x += player.speed;
     }
 
-    // Move forward
     if (keys["ArrowUp"] || keys["w"] || keys["W"]) {
         player.y -= player.speed;
     }
 
-    // Move backward
     if (keys["ArrowDown"] || keys["s"] || keys["S"]) {
         player.y += player.speed;
     }
@@ -145,11 +175,12 @@ function update() {
 
     // Update enemies
     for (let i = enemies.length - 1; i >= 0; i--) {
-
         let enemy = enemies[i];
-        enemy.y += enemy.speed;
 
-        // Remove enemy after leaving screen
+        // Increase enemy speed when score reaches 10
+        let speedBoost = Math.floor(score / 10) * 2;
+        enemy.y += enemy.speed + speedBoost;
+
         if (enemy.y > canvas.height) {
             enemies.splice(i, 1);
             score++;
@@ -167,11 +198,13 @@ function update() {
             player.y + player.h - verticalPadding > enemy.y + verticalPadding
         ) {
             gameOver = true;
-
             document.getElementById("finalScore").textContent = score;
-document.getElementById("gameOverScreen").classList.remove("hidden");
 
-return;
+            document
+                .getElementById("gameOverScreen")
+                .classList
+                .remove("hidden");
+            return;
         }
     }
 }
@@ -181,18 +214,19 @@ function drawRoad() {
 
     ctx.fillStyle = "#66b5ff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
     ctx.fillStyle = "green";
     ctx.fillRect(0, 0, 50, canvas.height);
     ctx.fillRect(350, 0, 50, canvas.height);
-
     ctx.fillStyle = "#555";
     ctx.fillRect(50, 0, 300, canvas.height);
-
     ctx.strokeStyle = "white";
     ctx.lineWidth = 5;
 
-    for (let y = -40 + (roadOffset % 40); y < canvas.height; y += 40) {
+    for (
+        let y = -40 + (roadOffset % 40);
+        y < canvas.height;
+        y += 40
+    ) {
         ctx.beginPath();
         ctx.moveTo(200, y);
         ctx.lineTo(200, y + 20);
@@ -208,26 +242,82 @@ function draw() {
     drawRoad();
 
     if (playerImg.complete) {
-        ctx.drawImage(playerImg, player.x, player.y, player.w, player.h);
+        ctx.drawImage(
+            playerImg,
+            player.x,
+            player.y,
+            player.w,
+            player.h
+        );
     }
 
     enemies.forEach(enemy => {
+
         if (enemyImg.complete) {
-            ctx.drawImage(enemyImg, enemy.x, enemy.y, enemy.w, enemy.h);
+
+            ctx.drawImage(
+                enemyImg,
+                enemy.x,
+                enemy.y,
+                enemy.w,
+                enemy.h
+            );
         }
     });
 
-    // Draw score
-    ctx.fillStyle = "white";
-    ctx.font = "20px Arial";
-    ctx.fillText("Score: " + score, 10, 30);
-}
+    // Score
+    ctx.fillStyle = scoreColor;
+    ctx.font = "italic 20px Arial";
 
+    ctx.shadowColor = scoreColor;
+    ctx.shadowBlur = 10;
+
+    ctx.fillText(
+        "Score: " + score,
+        10,
+        45
+    );
+
+    ctx.shadowBlur = 0;
+
+// Speed meter
+ctx.fillStyle = scoreColor;
+ctx.font = "italic 18px Arial";
+
+ctx.shadowColor = scoreColor;
+ctx.shadowBlur = 10;
+
+ctx.fillText(
+    "SPD: " + currentSpeed + " km/h",
+    260,
+    40
+);
+
+ctx.shadowBlur = 0;
+
+ctx.fillStyle = "#222";
+ctx.fillRect(
+    260,
+    50,
+    110,
+    12
+);
+
+let speedBar = Math.min(currentSpeed, 110);
+
+ctx.fillStyle = scoreColor;
+
+ctx.fillRect(
+    260,
+    50,
+    speedBar,
+    12
+);
+}
 // Main game loop
 function loop() {
     update();
     draw();
     requestAnimationFrame(loop);
 }
-
 loop();
