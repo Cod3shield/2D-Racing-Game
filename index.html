@@ -12,6 +12,12 @@
 
     <canvas id="game"></canvas>
 
+    <div id="gameOverScreen" class="hidden">
+        <h1>GAME OVER</h1>
+        <p>Score: <span id="finalScore">0</span></p>
+        <button onclick="resetGame()">Play Again</button>
+    </div>
+
     <!-- Mobile Controls -->
     <div id="mobile-controls">
         <button id="btnW">W</button>
@@ -25,5 +31,4 @@
 
     <script src="script.js"></script>
 </body>
-
 </html>
