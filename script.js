@@ -107,6 +107,8 @@ function resetGame() {
     score = 0;
     roadOffset = 0;
     gameOver = false;
+
+    document.getElementById("gameOverScreen").classList.add("hidden");
 }
 
 // Update game objects
@@ -166,12 +168,10 @@ function update() {
         ) {
             gameOver = true;
 
-            setTimeout(() => {
-                alert("Game Over!\nScore: " + score);
-                resetGame();
-            }, 100);
+            document.getElementById("finalScore").textContent = score;
+document.getElementById("gameOverScreen").classList.remove("hidden");
 
-            return;
+return;
         }
     }
 }
