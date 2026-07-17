@@ -36,12 +36,14 @@ canvas {
     color: red;
     font-size: 50px;
     margin-bottom: 15px;
+    font-style: italic;
 }
 
 #gameOverScreen p {
     color: yellow;
     font-size: 28px;
     margin-bottom: 20px;
+    font-style: italic;
 }
 
 #gameOverScreen button {
@@ -51,6 +53,7 @@ canvas {
     border-radius: 8px;
     background: limegreen;
     color: white;
+    font-style: italic;
     cursor: pointer;
 }
 
@@ -69,6 +72,12 @@ canvas {
 
     body {
         flex-direction: column;
+    }
+
+    #gameOverScreen {
+        width: 90%;     
+        max-width: 400px;
+        padding: 30px 20px;
     }
 
     #mobile-controls {
@@ -103,5 +112,35 @@ canvas {
 
     #mobile-controls button:active {
         background: #666;
+    }
+}
+
+/* Small Mobile (300px - 480px) */
+@media (min-width:300px) and (max-width:480px) {
+
+    #gameOverScreen {
+        width: 80%;
+        max-width: none;
+        padding: 25px 15px;
+    }
+
+    #gameOverScreen h1 {
+        font-size: 40px;
+    }
+
+    #gameOverScreen p {
+        font-size: 22px;
+    }
+
+    #gameOverScreen button {
+        width: 100%;
+        padding: 14px;
+        font-size: 20px;
+    }
+
+    #mobile-controls button {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
     }
 }
