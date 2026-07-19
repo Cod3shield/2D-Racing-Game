@@ -234,3 +234,18 @@ function drawRoad() {
     }
 }
 
+/*
+==================================================
+Repository Information
+==================================================
+This repository contains a partial version of the
+project for demonstration and portfolio purposes.
+Some source code, features, and assets have been
+intentionally excluded to protect the complete
+implementation.
+
+Thank you for your understanding and interest in
+this project.
+==================================================
+*/
+
