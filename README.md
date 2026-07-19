@@ -18,7 +18,6 @@ https://2dracinggame.netlify.app/
 - HTML5
 - CSS3
 - JavaScript (ES6)
-- HTML5 Canvas API
 
 ## 🚀 Running the Project
 1. Clone or download this repository.
