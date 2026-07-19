@@ -1,25 +1,33 @@
 # 🏎️ Racing Game
 
-A simple 2D racing game developed using **HTML**, **CSS**, and **JavaScript**. Control your car, avoid enemy vehicles, and earn points by surviving as long as possible.
+A 2D racing game developed using **HTML**, **CSS**, and **JavaScript**. Players control a vehicle, avoid oncoming traffic, and earn points by surviving as long as possible. The project demonstrates responsive controls, collision detection, score tracking, and game state management.
 
 ## 🌐 Live Demo
-Play the game here: https://2dracinggame.netlify.app/
+https://2dracinggame.netlify.app/
 
-## Features
+## ✨ Features
 - Keyboard controls
+- Mobile touch controls
 - Endless gameplay
 - Collision detection
-- Score tracking
+- Dynamic score tracking
+- Progressive difficulty
+- Responsive HTML5 Canvas gameplay
 
-## Technologies Used
+## 🛠️ Technologies Used
 - HTML5
 - CSS3
-- JavaScript
+- JavaScript (ES6)
+- HTML5 Canvas API
 
-## How to Run
-1. Download the project.
-2. Extract the files if they are in a ZIP folder.
-3. Open the `index.html` file in your web browser.
+## 🚀 Running the Project
+1. Clone or download this repository.
+2. Open `index.html` in any modern web browser.
 
-## License
-This project is for educational purposes.
+## 📌 Repository Information
+This repository contains a demonstration version of the project. Certain source code, assets, and implementation details have been intentionally excluded to protect the complete application.
+
+## 📄 License
+© 2026 All Rights Reserved.
+
+This repository is provided for demonstration and portfolio purposes only. Copying, redistribution, or commercial use of the source code without permission is not permitted.
